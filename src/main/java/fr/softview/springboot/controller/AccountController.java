@@ -3,6 +3,7 @@ package fr.softview.springboot.controller;
 import fr.softview.springboot.model.business.Operation;
 import fr.softview.springboot.model.dto.DepositDto;
 import fr.softview.springboot.model.dto.OperationsDto;
+import fr.softview.springboot.model.dto.TransfertDto;
 import fr.softview.springboot.model.dto.WithdrawDto;
 import fr.softview.springboot.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class AccountController {
     @ResponseBody
     public OperationsDto history (@PathVariable (value = "accountNumber") String accountNumber) {
         return accountService.history(accountNumber);
+    }
+    
+    @RequestMapping(value = "/transfert", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public OperationsDto transfert (@RequestBody TransfertDto transfertDto) {
+
+        return accountService.transfert(transfertDto.getAccountA(), transfertDto.getAccountB(), transfertDto.getAmount());
     }
 
 }

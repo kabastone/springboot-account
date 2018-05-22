@@ -15,6 +15,7 @@ import fr.softview.springboot.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,6 +88,18 @@ public class AccountServiceImpl implements  AccountService {
     public OperationsDto history(String accountNumber) {
         List<OperationEntity>  operations = operationRepository.findByAccount(accountNumber);
         return operationConverter.convertList(operations);
+    }
+    
+    public OperationsDto transfert(String accountNumberA, String accountNumberB, int amount) {
+    		List<Operation> operations = new ArrayList<>();
+    		OperationsDto operationsDto = new OperationsDto();
+  
+    		operations.add(withdraw(accountNumberA, amount));
+    		operations.add(deposit(accountNumberB, amount));
+    			
+    		operationsDto.setOperations(operations);
+    		
+    		return operationsDto;	
     }
 
     private AccountEntity getAccount(String accountNumber){
