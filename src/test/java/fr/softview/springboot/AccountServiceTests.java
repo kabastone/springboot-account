@@ -40,24 +40,19 @@ public class AccountServiceTests {
 	@InjectMocks
 	private AccountServiceImpl accountServiceImpl;
 	
-	private Operation operationConvert; 
+	OperationEntity operation; 
 	@Before
 	public void setup() throws Exception {
-		operationConvert = new Operation();
-		operationConvert.setAccountNumber("A209");
-		operationConvert.setAmount(30);
-		operationConvert.setBalance(80);
-		operationConvert.setType("DEPOSIT");
-		operationConvert.setDate(DateUtil.getCurrentDate());
-	}
-	
-	@Test
-	public void testDeposit() {
-		OperationEntity operation = new OperationEntity();
+		operation = new OperationEntity();
 		operation.setAccount("A209");
 		operation.setAmount(30);
 		operation.setBalance(50);
 		operation.setDate("21/05/2018");
+		
+	}
+	
+	@Test
+	public void testDeposit() {
 		operation.setType("DEPOSIT");
 		AccountEntity account = new AccountEntity();
 		account.setBalance(50);
@@ -74,11 +69,6 @@ public class AccountServiceTests {
 	
 	@Test
 	public void testWithdrawOK() {
-		OperationEntity operation = new OperationEntity();
-		operation.setAccount("A209");
-		operation.setAmount(30);
-		operation.setBalance(50);
-		operation.setDate("21/05/2018");
 		operation.setType("WITHDRAW");
 		AccountEntity account = new AccountEntity();
 		account.setBalance(50);
@@ -96,11 +86,7 @@ public class AccountServiceTests {
 	@SuppressWarnings("unchecked")
 	@Test(expected = OperationException.class)
 	public void testWithdrawNOK() {
-		OperationEntity operation = new OperationEntity();
-		operation.setAccount("A209");
 		operation.setAmount(60);
-		operation.setBalance(50);
-		operation.setDate("21/05/2018");
 		operation.setType("WITHDRAW");
 		AccountEntity account = new AccountEntity();
 		account.setBalance(50);
